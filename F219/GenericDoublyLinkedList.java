@@ -4,18 +4,24 @@ public class GenericDoublyLinkedList<T>
 {
     private Node<T> head;
     private int size;
-
+    
+    /**
+     * 
+     */
     GenericDoublyLinkedList()
     {
-        head = null; 
+        head = null;    
         size = 0;
     }
-
+    /**
+     * Surely this will work
+     * @param data
+     */
     public void add(T data)
     {
         if(head == null)
         {
-            head = new Node();
+            head = new Node<T>();
             head.setData(data);
             size++;
         }
@@ -27,7 +33,7 @@ public class GenericDoublyLinkedList<T>
                 currentNode = currentNode.getNextNode();
 
             }
-            currentNode.setNextNode(new Node());
+            currentNode.setNextNode(new Node<T>());
             Node<T> tempNode = currentNode;
             currentNode = currentNode.getNextNode();
             currentNode.setLastNode(tempNode);
@@ -35,6 +41,10 @@ public class GenericDoublyLinkedList<T>
             size++;
         }
     }
+    /**
+     * I guess it only works for methods?
+     * @param index
+     */
     public void removeAt(int index)
     {
         if(index == 0)
