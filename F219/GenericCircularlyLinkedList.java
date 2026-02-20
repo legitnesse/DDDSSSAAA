@@ -1,18 +1,19 @@
 package F219;
 
-/**
- * Hellooo
- */
-public class GenericDoublyLinkedList<T>
+public class GenericCircularlyLinkedList<T>
 {
     private Node<T> head;
+    private Node<T> tail;
     private int size;
 
-    GenericDoublyLinkedList()
+    public GenericCircularlyLinkedList()
     {
-        head = null;    
+        head = null;
+        tail = null;
         size = 0;
     }
+
+
     public void add(T data)
     {
         if(head == null)
@@ -20,20 +21,14 @@ public class GenericDoublyLinkedList<T>
             head = new Node<T>();
             head.setData(data);
             size++;
+            tail = head;
         }
         else
         {
-            Node<T> currentNode = head;
-            while(currentNode.getNextNode() != null)
-            {
-                currentNode = currentNode.getNextNode();
-
-            }
-            currentNode.setNextNode(new Node<T>());
-            Node<T> tempNode = currentNode;
-            currentNode = currentNode.getNextNode();
-            currentNode.setLastNode(tempNode);
-            currentNode.setData(data);
+            tail.setNextNode(new Node<T>());
+            tail.getNextNode().setLastNode(tail);
+            tail = tail.getNextNode();
+            tail.setData(data);
             size++;
         }
     }
@@ -83,10 +78,10 @@ public class GenericDoublyLinkedList<T>
         }
         else
         {
-            if(currentNode.getNextNode() == null)
+            if(currentNode == tail)
             {
-                currentNode = currentNode.getLastNode();
-                currentNode.setNextNode(null);
+                tail.getLastNode().setNextNode(null);
+                size--;
             }
             else
             {
