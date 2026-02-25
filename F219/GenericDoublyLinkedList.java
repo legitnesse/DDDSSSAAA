@@ -19,30 +19,27 @@ public class GenericDoublyLinkedList<T>
         {
             head = new Node<T>();
             head.setData(data);
-            size++;
         }
         else
         {
             Node<T> currentNode = head;
-            while(currentNode.getNextNode() != null)
+            Boolean hasNext = currentNode.getNextNode() != null;
+            while(hasNext)
             {
                 currentNode = currentNode.getNextNode();
-
+                hasNext = currentNode.getNextNode() != null;
             }
             currentNode.setNextNode(new Node<T>());
-            Node<T> tempNode = currentNode;
-            currentNode = currentNode.getNextNode();
-            currentNode.setLastNode(tempNode);
-            currentNode.setData(data);
-            size++;
+            currentNode.getNextNode().setLastNode(currentNode);
+            currentNode.getNextNode().setData(data);
         }
+        size++;
     }
     public void removeAt(int index)
     {
         if(index == 0)
         {
             head = head.getNextNode();
-            size--;
         }
         else
         {
@@ -55,19 +52,15 @@ public class GenericDoublyLinkedList<T>
             }
             if(currentNode.getNextNode() == null)
             {
-                currentNode = currentNode.getLastNode();
-                currentNode.setNextNode(null);
+                currentNode.getLastNode().setNextNode(null);
             }
             else
             {
-                Node<T> tempNode = currentNode;
-                currentNode = currentNode.getLastNode();
-                currentNode.setNextNode(currentNode.getNextNode().getNextNode());
-                currentNode = currentNode.getNextNode();
-                currentNode.setLastNode(tempNode.getLastNode());
-                size--;
+                currentNode.getLastNode().setNextNode(currentNode.getNextNode());
+                currentNode.getNextNode().setLastNode(currentNode.getLastNode());
             }
         }
+        size--;
     }
     public void remove(T data)
     {
@@ -79,7 +72,6 @@ public class GenericDoublyLinkedList<T>
         if(currentNode == head)
         {
             head = head.getNextNode();
-            size--;  
         }
         else
         {
@@ -90,15 +82,11 @@ public class GenericDoublyLinkedList<T>
             }
             else
             {
-                Node<T> tempNode = currentNode;
-                currentNode = currentNode.getLastNode();
-                currentNode.setNextNode(currentNode.getNextNode().getNextNode());
-                currentNode = currentNode.getNextNode();
-                currentNode.setLastNode(tempNode.getLastNode());
-                size--;
+                currentNode.getLastNode().setNextNode(currentNode.getNextNode());
+                currentNode.getNextNode().setLastNode(currentNode.getLastNode());
             }
         }
-    
+        size--;
     }
     public T get(int index)
     {
@@ -111,6 +99,10 @@ public class GenericDoublyLinkedList<T>
         }
         return currentNode.getData();
     }
+    public int getSize()
+    {
+        return size;
+    }
     public void print()
     {
         Node<T> currentNode = head;
@@ -118,6 +110,21 @@ public class GenericDoublyLinkedList<T>
         {
             System.out.println(currentNode.getData());
             currentNode = currentNode.getNextNode();
+        }
+    }
+    public void reversePrint()
+    {
+        Node<T> currentNode = head;
+        Boolean hasNext = currentNode.getNextNode() != null;
+        while(hasNext)
+        {
+            currentNode = currentNode.getNextNode();
+            hasNext = currentNode.getNextNode() != null;
+        }
+        while(currentNode != null)
+        {
+            System.out.println(currentNode.getData());
+            currentNode = currentNode.getLastNode();
         }
     }
 }

@@ -12,16 +12,14 @@ public class GenericCircularlyLinkedList<T>
         tail = null;
         size = 0;
     }
-
-
     public void add(T data)
     {
         if(head == null)
         {
             head = new Node<T>();
             head.setData(data);
-            size++;
             tail = head;
+            size++;
         }
         else
         {
@@ -37,7 +35,12 @@ public class GenericCircularlyLinkedList<T>
         if(index == 0)
         {
             head = head.getNextNode();
-            size--;
+            head.setLastNode(null);
+        }
+        else if(index == size - 1)
+        {
+            tail = tail.getLastNode();
+            tail.setNextNode(null);
         }
         else
         {
@@ -48,21 +51,10 @@ public class GenericCircularlyLinkedList<T>
                 currentNode = currentNode.getNextNode();
                 currentIndex++;
             }
-            if(currentNode.getNextNode() == null)
-            {
-                currentNode = currentNode.getLastNode();
-                currentNode.setNextNode(null);
-            }
-            else
-            {
-                Node<T> tempNode = currentNode;
-                currentNode = currentNode.getLastNode();
-                currentNode.setNextNode(currentNode.getNextNode().getNextNode());
-                currentNode = currentNode.getNextNode();
-                currentNode.setLastNode(tempNode.getLastNode());
-                size--;
-            }
+            currentNode.getLastNode().setNextNode(currentNode.getNextNode());
+            currentNode.getNextNode().setLastNode(currentNode.getLastNode());
         }
+        size--;
     }
     public void remove(T data)
     {
@@ -73,27 +65,20 @@ public class GenericCircularlyLinkedList<T>
         }
         if(currentNode == head)
         {
-            head = head.getNextNode();
-            size--;  
+            head = head.getNextNode(); 
+            head.setLastNode(null);
+        }
+        else if(currentNode == tail) 
+        {
+            tail = tail.getLastNode();
+            tail.setNextNode(null);
         }
         else
         {
-            if(currentNode == tail)
-            {
-                tail.getLastNode().setNextNode(null);
-                size--;
-            }
-            else
-            {
-                Node<T> tempNode = currentNode;
-                currentNode = currentNode.getLastNode();
-                currentNode.setNextNode(currentNode.getNextNode().getNextNode());
-                currentNode = currentNode.getNextNode();
-                currentNode.setLastNode(tempNode.getLastNode());
-                size--;
-            }
+            currentNode.getLastNode().setNextNode(currentNode.getNextNode());
+            currentNode.getNextNode().setLastNode(currentNode.getLastNode());            
         }
-    
+        size--;
     }
     public T get(int index)
     {
@@ -106,6 +91,10 @@ public class GenericCircularlyLinkedList<T>
         }
         return currentNode.getData();
     }
+    public int getSize()
+    {
+        return size;
+    }
     public void print()
     {
         Node<T> currentNode = head;
@@ -113,6 +102,15 @@ public class GenericCircularlyLinkedList<T>
         {
             System.out.println(currentNode.getData());
             currentNode = currentNode.getNextNode();
+        }
+    }
+    public void reversePrint()
+    {
+        Node<T> currentNode = tail;
+        while(currentNode != null)
+        {
+            System.out.println(currentNode.getData());
+            currentNode = currentNode.getLastNode();
         }
     }
 }

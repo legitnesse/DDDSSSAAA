@@ -6,8 +6,9 @@ public class GenericCircularlyLinkedListTester
     {
         GenericCircularlyLinkedList<String> gcll = new GenericCircularlyLinkedList<>();
         gcll.add("A");
-        gcll.add("A");
-        gcll.add("A");
+        gcll.add("B");
+        gcll.add("C");
         gcll.print();
+        gcll.reversePrint();
     }
 }

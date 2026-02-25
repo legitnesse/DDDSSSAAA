@@ -11,5 +11,6 @@ public class GenericDoublyLinkedListTester
         gdll.remove("C");
         gdll.print();
         System.out.println(gdll.get(0));
+        gdll.reversePrint();
     } 
 }
