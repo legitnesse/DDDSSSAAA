@@ -19,7 +19,6 @@ public class GenericCircularlyLinkedList<T>
             head = new Node<T>();
             head.setData(data);
             tail = head;
-            size++;
         }
         else
         {
@@ -27,8 +26,8 @@ public class GenericCircularlyLinkedList<T>
             tail.getNextNode().setLastNode(tail);
             tail = tail.getNextNode();
             tail.setData(data);
-            size++;
         }
+        size++;
     }
     public void removeAt(int index)
     {
