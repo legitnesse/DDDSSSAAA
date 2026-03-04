@@ -2,7 +2,7 @@ package F226;
 
 public class Deck<T> 
 {
-    public Object[] arr;
+    private Object[] arr;
     private int size;
 
     public Deck()
@@ -38,7 +38,8 @@ public class Deck<T>
             throw new RuntimeException("Cannot pop an empty stack");
         }
         T data = (T) arr[size - 1];
-        arr[size - 1] = null;
+        //Not needed, it turns out.
+        //arr[size - 1] = null;
         size--;            
         return data;
     }

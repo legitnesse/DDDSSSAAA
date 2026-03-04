@@ -112,4 +112,22 @@ public class GenericCircularlyLinkedList<T>
             currentNode = currentNode.getLastNode();
         }
     }
+    public boolean find(T data)
+    {
+        Node<T> currentNode = head;
+        if(currentNode.getData() == data)
+        {
+            return true;
+        }
+        boolean hasNext = currentNode.getNextNode() != null;
+        while(hasNext)
+        {
+            if(currentNode.getData() == data)
+            {
+                return true;
+            }
+            hasNext = currentNode.getLastNode() != null;
+        }
+        return false;
+    }
 }
