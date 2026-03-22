@@ -1,12 +1,12 @@
 package F219;
 
-public class GenericCircularlyLinkedList<T>
+public class GenericDoublyCappedDoublyLinkedList<T>
 {
     private Node<T> head;
     private Node<T> tail;
     private int size;
 
-    public GenericCircularlyLinkedList()
+    public GenericDoublyCappedDoublyLinkedList()
     {
         head = null;
         tail = null;
@@ -19,12 +19,15 @@ public class GenericCircularlyLinkedList<T>
             head = new Node<T>();
             head.setData(data);
             tail = head;
+            head.setNextNode(tail);
+            head.setLastNode(tail);
         }
         else
         {
             tail.setNextNode(new Node<T>());
             tail.getNextNode().setLastNode(tail);
             tail = tail.getNextNode();
+            tail.setNextNode(head);
             tail.setData(data);
         }
         size++;
@@ -34,12 +37,12 @@ public class GenericCircularlyLinkedList<T>
         if(index == 0)
         {
             head = head.getNextNode();
-            head.setLastNode(null);
+            head.setLastNode(tail);
         }
         else if(index == size - 1)
         {
             tail = tail.getLastNode();
-            tail.setNextNode(null);
+            tail.setNextNode(head);
         }
         else
         {

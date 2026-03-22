@@ -1,14 +1,14 @@
 package F303;
 
-import F219.GenericCircularlyLinkedList;
+import F219.GenericDoublyCappedDoublyLinkedList;
 
 public class LinkedListStack<T>
 {
-    private GenericCircularlyLinkedList<T> list;
+    private GenericDoublyCappedDoublyLinkedList<T> list;
 
     public LinkedListStack()
     {
-        list = new GenericCircularlyLinkedList<T>();
+        list = new GenericDoublyCappedDoublyLinkedList<T>();
     }
     
     public void push(T data)
@@ -27,7 +27,7 @@ public class LinkedListStack<T>
     }
     public void clear()
     {
-        list = new GenericCircularlyLinkedList<>();
+        list = new GenericDoublyCappedDoublyLinkedList<>();
     }
     public void print()
     {

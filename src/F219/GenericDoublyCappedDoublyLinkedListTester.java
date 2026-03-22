@@ -1,10 +1,10 @@
 package F219;
 
-public class GenericCircularlyLinkedListTester 
+public class GenericDoublyCappedDoublyLinkedListTester 
 {
     public static void main(String[] args) 
     {
-        GenericCircularlyLinkedList<String> gcll = new GenericCircularlyLinkedList<>();
+        GenericDoublyCappedDoublyLinkedList<String> gcll = new GenericDoublyCappedDoublyLinkedList<>();
         gcll.add("A");
         gcll.add("B");
         gcll.add("C");

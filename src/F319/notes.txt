@@ -1,0 +1,29 @@
+priority queue. current vip or not. boolean. 
+
+or multiple registers/lines + super vip ROOM
+
+resource management is very case specific. 
+
+observer factory adapter? what is this. presolvable. software design patterns. 
+
+//yo why he frying me "pick a different ide"
+
+"God is private
+
+there can only be one God
+this is singleton design. lowkey lit. 
+
+we want 14. 
+
+write your own iterator interface. next(), hasNext(), remove()
+
+slotmachine program has global int coins. slot machine implements iterator.
+iterate thru coins. each win gives u 2 coin. each loss eats coin.
+
+20% wins. run until broke. count how many plays until u broke. 
+
+now make coins objects. coins empty classes. do arraylist. 
+
+consider having pullslotmachine to start gamble. uses coin to call rng to increase or dec coin amount?
+
+do priority queue and slotmachine.
