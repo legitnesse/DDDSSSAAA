@@ -71,12 +71,12 @@ public class Character
             second = player;
         }
 
-        double speedRatio = (double) first.getSpeed() / second.getSpeed();
+        double speedRatio = (double) first.speed / second.speed;
         double successfulAttackProbability = speedRatio / 2;
         if(GameUtility.random.nextDouble() < successfulAttackProbability)
         {
-            System.out.println(second.getName() + " failed to dodge the attack by " + first.getName() + ", lowering their health from " + second.getHealth() + " by " + first.getStrength() + " to " + (second.getHealth() - first.getStrength()));
-            second.setHealth(second.getHealth() - first.getStrength());
+            System.out.println(second.name + " failed to dodge the attack by " + first.name + ", lowering their health from " + second.health + " by " + first.strength + " to " + (second.health - first.strength));
+            second.health -= first.strength;
         }
         else
         {
@@ -99,16 +99,16 @@ public class Character
             successfulAttackProbability = (1 / speedRatio) / 2;
             if(GameUtility.random.nextDouble() < successfulAttackProbability)
             {
-                System.out.println(first.getName() + " failed to dodge the attack by " + second.getName() + ", lowering their health from " + first.getHealth() + " by " + second.getStrength() + " to " + (first.getHealth() - second.getStrength()));
-                first.setHealth(first.getHealth() - second.getStrength());
+                System.out.println(first.name + " failed to dodge the attack by " + second.name + ", lowering their health from " + first.getHealth() + " by " + second.getStrength() + " to " + (first.getHealth() - second.getStrength()));
+                first.health -= second.strength;
             }
             else
             {
-                System.out.println(first.getName() + " managed to dodge the attack by " + second.getName());
+                System.out.println(first.name + " managed to dodge the attack by " + second.name);
             }
             if(first.getHealth() <= 0)
             {
-                System.out.println(first.getName() + " died.");
+                System.out.println(first.name + " died.");
                 if(first == enemy)
                 {
                     return 1;

@@ -46,7 +46,7 @@ public class ContentRoom extends Room
         {
             System.out.print("Y");
         }
-        else if(getEnemy() != null)
+        else if(enemy != null)
         {
             System.out.print("X");
         }

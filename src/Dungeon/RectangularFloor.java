@@ -9,7 +9,7 @@ public class RectangularFloor extends Floor
     public RectangularFloor(int floorNumber, Player player)
     {
         super(floorNumber, player);
-        rooms = new Room[GameUtility.random.nextInt(2, 6)][GameUtility.random.nextInt(2, 6)];
+        rooms = new Room[GameUtility.random.nextInt(3, 7)][GameUtility.random.nextInt(3, 7)];
         for(int row = 0; row < rooms.length; row++)
         {
             for(int column = 0; column < rooms[0].length; column++)

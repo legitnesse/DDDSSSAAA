@@ -15,6 +15,13 @@ public class StrengthStall extends Room
     }
     public void print()
     {
-        System.out.print("[Strength]");
+        if(doesHavePlayer())
+        {
+            System.out.print("[Strength^]");
+        }
+        else
+        {
+            System.out.print("[Strength]");
+        }
     }
 }

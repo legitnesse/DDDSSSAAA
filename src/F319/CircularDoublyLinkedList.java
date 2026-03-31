@@ -187,7 +187,9 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
         }
         else
         {
-            remove(currentIndex);
+            currentNode.previousNode.nextNode = currentNode.nextNode;
+            currentNode.nextNode.previousNode = currentNode.previousNode;
+            size--;
             return true;
         }
     }
@@ -206,7 +208,9 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
         }
         else
         {
-            remove(currentIndex);
+            currentNode.previousNode.nextNode = currentNode.nextNode;
+            currentNode.nextNode.previousNode = currentNode.previousNode;
+            size--;
             return true;
         }
     }
@@ -214,17 +218,16 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
     {
         checkIndex(index);
         Node currentNode = getNode(index);
-        currentNode.data = element;
-        return currentNode.data;
+        return currentNode.data = element;
     }
     public boolean contains(E element)
     {
         Node currentNode = first;
-        while(currentNode.data != element && currentNode != last)
+        while(currentNode.data.equals(element) && currentNode != last)
         {
             currentNode = currentNode.nextNode;
         }
-        if(currentNode.data == element)
+        if(currentNode.data.equals(element))
         {
             return true;
         }
@@ -247,6 +250,7 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
     }
     public Node getNode(int index)
     {
+        checkIndex(index);
         if(index < size / 2)
         {
             Node currentNode = first;
@@ -271,7 +275,6 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
         }
     }
 
-    @Override
     public Iterator<E> iterator()
     {
         return new CircularDoublyLinkedListIterator();
@@ -285,7 +288,7 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
     {
         public Node newNode;
         public Node oldNode;
-        public int nextIndex;
+        public int newIndex;
         public boolean isAfterMove;
 
         public CircularDoublyLinkedListIterator()
@@ -305,12 +308,13 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
             if(newNode == null)
             {
                 newNode = first;
-                nextIndex = 0;
+                newIndex = 0;
             }
             else
             {
                 newNode = newNode.nextNode;
-                nextIndex++;
+                newIndex++;
+                ensureIndex();
             }
             isAfterMove = true;
             return newNode.data;
@@ -325,14 +329,13 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
             if(newNode == null)
             {
                 newNode = last;
-                nextIndex = size - 1;
+                newIndex = size - 1;
             }
             else
             {
                 newNode = newNode.previousNode;
-                nextIndex--;
+                newIndex--;
                 ensureIndex();
-
             }
             isAfterMove = true;
             return newNode.data;
@@ -347,7 +350,7 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
             {
                 addFirst(element);
                 newNode = first;
-                nextIndex = 0;
+                newIndex = 0;
             }
             else
             {
@@ -362,7 +365,7 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
                 }
                 size++;
                 oldNode = null;
-                nextIndex++;
+                newIndex++;
                 ensureIndex();
                 isAfterMove = false;
             }
@@ -379,32 +382,31 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
                 last = null;
                 newNode = null;
                 oldNode = null;
-                nextIndex = 0;
+                newIndex = 0;
                 size = 0;
                 isAfterMove = false;
                 return;
             }
+            else
+            newNode.nextNode.previousNode = newNode.previousNode;
+            newNode.previousNode.nextNode = newNode.nextNode;
 
-            Node removedNode = newNode;
-            removedNode.nextNode.previousNode = removedNode.previousNode;
-            removedNode.previousNode.nextNode = removedNode.nextNode;
-
-            if(removedNode == first)
+            if(newNode == first)
             {
-                first = removedNode.nextNode;
+                first = newNode.nextNode;
             }
-            if(removedNode == last)
+            if(newNode == last)
             {
-                last = removedNode.previousNode;
+                last = newNode.previousNode;
             }
 
             newNode = oldNode;
             oldNode = null;
             size--;
-            nextIndex--;
+            newIndex--;
             if(size == 0)
             {
-                nextIndex = 0;
+                newIndex = 0;
             }
             else
             {
@@ -422,7 +424,7 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
         }
         public int nextIndex()
         {
-            return nextIndex;
+            return newIndex;
         }
         public int previousIndex()
         {
@@ -430,7 +432,7 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
             {
                 return -1;
             }
-            return Math.floorMod(nextIndex - 1, size);
+            return Math.floorMod(newIndex - 1, size);
         }
         public boolean hasNext()
         {
@@ -440,7 +442,7 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
             }
             else
             {
-                if(nextIndex + 1 == size)
+                if(newIndex + 1 == size)
                 {
                     return false;
                 }
@@ -471,9 +473,9 @@ public class CircularDoublyLinkedList<E> implements Iterable<E>
 
         public void ensureIndex()
         {
-            if(size != 0 &&(nextIndex < 0 || nextIndex > size))
+            if(size != 0 &&(newIndex < 0 || newIndex > size))
             {
-                nextIndex = Math.floorMod(nextIndex, size);
+                newIndex = Math.floorMod(newIndex, size);
             }
         }
     }

@@ -34,12 +34,12 @@ public class PrimitiveSlotMachine implements Iterator
         {
             numberOfCoins++;
             numberOfWins++;
-            System.out.println("You gambled 1 coin away to win 2! You now have " + numberOfCoins + " coins!");
+            System.out.println("You gambled 1 coin away and won 2! You now have " + numberOfCoins + " coins!");
         }
         else
         {
             remove();
-            System.out.println("You gambled 1 coin away to win 0! You now have " + numberOfCoins + " coins!");
+            System.out.println("You gambled 1 coin away and lost! You now have " + numberOfCoins + " coins!");
         }
         return null;
     }

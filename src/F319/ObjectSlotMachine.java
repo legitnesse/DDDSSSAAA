@@ -48,11 +48,11 @@ public class ObjectSlotMachine implements Iterator
                 coins.add(new Coin());
             }
             numberOfWins++;
-            System.out.println("You gambled 1 coin away to win 2! You now have " + coins.size() + " coins!");
+            System.out.println("You gambled 1 coin away and won 2! You now have " + coins.size() + " coins!");
         }
         else
         {
-            System.out.println("You gambled 1 coin away to win 0! You now have " + coins.size() + " coins!");
+            System.out.println("You gambled 1 coin away and lost! You now have " + coins.size() + " coins!");
         }
         return null;
     }
