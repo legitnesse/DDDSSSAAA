@@ -10,6 +10,7 @@ public class StrengthStall extends Room
         {
             player.setMoney(player.getMoney() - payment);
             player.setStrength(player.getStrength() + payment);
+            System.out.println(player.getName() + " exchanged " + payment + " evil for " + payment + " strength.");
         }
                 
     }
@@ -17,7 +18,7 @@ public class StrengthStall extends Room
     {
         if(doesHavePlayer())
         {
-            System.out.print("[Strength^]");
+            System.out.print("[StrengthY]");
         }
         else
         {

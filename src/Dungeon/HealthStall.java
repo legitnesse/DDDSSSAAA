@@ -10,11 +10,19 @@ public class HealthStall extends Room
         {
             player.setMoney(player.getMoney() - payment);
             player.setHealth(player.getHealth() + payment);
+            System.out.println(player.getName() + " exchanged " + payment + " evil for " + payment + " health.");
         }
                 
     }
     public void print()
     {
-        System.out.print("[Health]");
+        if(doesHavePlayer())
+        {
+            System.out.print("[HealthY]");
+        }
+        else
+        {
+            System.out.print("[Health]");
+        }
     }
 }

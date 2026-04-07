@@ -32,7 +32,7 @@ public class Game
             {
                 if(currentFloor == 0)
                 {
-                    System.out.println("You cannot leave the dungeon yet.");
+                    System.out.println("You cannot exit the dungeon.");
                 }
                 else
                 {
@@ -50,21 +50,19 @@ public class Game
                 positionIterator.next();
                 currentFloor++;
                 getCurrentFloor().print();
+                
             }
-            return true;
+            System.out.println(player.getName() + " is on floor " + currentFloor);
+        }
+        else if(input.equalsIgnoreCase("STATS"))
+        {
+            player.print();
         }
         else
         {
-            if(getCurrentFloor().processInput(input))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        
+            return getCurrentFloor().processInput(input);
         }
+        return true;
     }
 
     public Floor getCurrentFloor()
@@ -100,5 +98,10 @@ public class Game
         {
             floors.addLast(new RectangularFloor(nextFloorNumber, player));
         }
+    }
+
+    public Player getPlayer()
+    {
+        return player;
     }
 }

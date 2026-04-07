@@ -24,15 +24,16 @@ public class ShopFloor extends Floor
         if(input.equalsIgnoreCase("L"))
         {
             enterLeftRoom();
+            print();
         }
         else if(input.equalsIgnoreCase("R"))
         {
             enterRightRoom();
+            print();
         }
         else if(input.equalsIgnoreCase("PRINT"))
         {
             print();
-            return true;
         }
         else
         {

@@ -75,7 +75,7 @@ public class Character
         double successfulAttackProbability = speedRatio / 2;
         if(GameUtility.random.nextDouble() < successfulAttackProbability)
         {
-            System.out.println(second.name + " failed to dodge the attack by " + first.name + ", lowering their health from " + second.health + " by " + first.strength + " to " + (second.health - first.strength));
+            System.out.println(second.name + " failed to dodge the attack by " + first.name + ", lowering their health from " + second.health + " by " + first.strength + " to " + (second.health - first.strength) + ".");
             second.health -= first.strength;
         }
         else
@@ -87,7 +87,9 @@ public class Character
             System.out.println(second.getName() + " died.");
             if(second == enemy)
             {
+                player.incrementNumberOfEnemiesSlayed();
                 return 1;
+                
             }
             else
             {
@@ -99,18 +101,19 @@ public class Character
             successfulAttackProbability = (1 / speedRatio) / 2;
             if(GameUtility.random.nextDouble() < successfulAttackProbability)
             {
-                System.out.println(first.name + " failed to dodge the attack by " + second.name + ", lowering their health from " + first.getHealth() + " by " + second.getStrength() + " to " + (first.getHealth() - second.getStrength()));
+                System.out.println(first.name + " failed to dodge the attack by " + second.name + ", lowering their health from " + first.getHealth() + " by " + second.getStrength() + " to " + (first.getHealth() - second.getStrength()) + ".");
                 first.health -= second.strength;
             }
             else
             {
-                System.out.println(first.name + " managed to dodge the attack by " + second.name);
+                System.out.println(first.name + " managed to dodge the attack by " + second.name + ".");
             }
             if(first.getHealth() <= 0)
             {
                 System.out.println(first.name + " died.");
                 if(first == enemy)
                 {
+                    player.incrementNumberOfEnemiesSlayed();
                     return 1;
                 }
                 else

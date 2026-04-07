@@ -10,11 +10,19 @@ public class SpeedStall extends Room
         {
             player.setMoney(player.getMoney() - payment);
             player.setSpeed(player.getSpeed() + payment);
+            System.out.println(player.getName() + " exchanged " + payment + " evil for " + payment + " speed.");
         }
                 
     }
     public void print()
     {
-        System.out.print("[Speed]");
+        if(doesHavePlayer())
+        {
+            System.out.print("[SpeedY]");
+        }
+        else
+        {
+            System.out.print("[Speed]");
+        }
     }
 }

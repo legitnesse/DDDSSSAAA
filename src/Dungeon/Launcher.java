@@ -16,5 +16,6 @@ public class Launcher
         }
         System.out.println("The game has ended.");
         scanner.close();
+        game.getPlayer().print();
     }
 }
