@@ -1,8 +1,11 @@
 package F226;
 
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import F226.Time;
 
 /**
 * JUnit Time Tests

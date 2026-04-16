@@ -32,8 +32,8 @@ public class BasicStringIntegerHashMap
     private LinkedList<Pair>[] data;
     //if we use custom linklist we just add datakey data value
     //
-    public int collisionCount;
-    public int size;
+    private int collisionCount;
+    private int size;
 
     public BasicStringIntegerHashMap()
     {

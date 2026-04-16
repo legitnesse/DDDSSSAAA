@@ -1,26 +1,60 @@
-package F409;
+package F414;
 
 import java.util.LinkedList;
-import java.util.Objects;
 
-public class GenericHashMap<K, V>
+public class ExperimentalStringIntegerHashMap 
 {
     private LinkedList<Pair>[] array;
+    private int whichHashFunction;
     private int numberOfMappings;
     private int numberOfCollisions;
+    private static final int smallPrime = 31;
+    private static final int largePrime = 29791;
 
-    public GenericHashMap()
+    public ExperimentalStringIntegerHashMap(int whichHashFunction)
     {
         array = new LinkedList[10];
         for(int i = 0; i < array.length; i++)
         {
             array[i] = new LinkedList<>();
         }
+        this.whichHashFunction = whichHashFunction;
     }
 
-    public void put(K key, V value)
+    private int hash(String key)
     {
-        int index = Math.floorMod(key.hashCode(), array.length);
+        if(whichHashFunction == 1)
+        {
+            return key.length();
+        }
+        else if(whichHashFunction == 2)
+        {
+            return key.length() % array.length;
+        }
+        else if(whichHashFunction == 3)
+        {
+            int sum = 0;
+            for(int i = 0; i < key.length(); i++)
+            {
+                sum += smallPrime * i + (int) key.charAt(i);
+            }
+            return sum % largePrime;
+        }
+        else
+        {
+            int sum = 0;
+            for(int i = 0; i < key.length(); i++)
+            {
+                sum ^= (int) key.charAt(i) * smallPrime;
+                sum *= largePrime;
+            }
+            return sum;
+        }
+    }
+
+    public void put(String key, int value)
+    {
+        int index = Math.floorMod(hash(key), array.length);
         for(Pair p : array[index])
         {
             if(p.key.equals(key))
@@ -37,22 +71,14 @@ public class GenericHashMap<K, V>
         numberOfMappings++;
     }
 
-    public V putIfAbsent(K key, V value)
+    public Object putIfAbsent(String key, int value)
     {
-        int index = Math.floorMod(key.hashCode(), array.length);
+        int index = Math.floorMod(hash(key), array.length);
         for(Pair p : array[index])
         {
             if(p.key.equals(key))
             {
-                if(p.value == null)
-                {
-                    p.value = value;
-                    return null;
-                }
-                else
-                {
-                    return p.value;
-                }    
+                return p.value;
             }
         }
         if(array[index].size() > 0)
@@ -64,9 +90,9 @@ public class GenericHashMap<K, V>
         return null;
     }
 
-    public V get(K key)
+    public Object get(String key)
     {
-        int index = Math.floorMod(key.hashCode(), array.length);
+        int index = Math.floorMod(hash(key), array.length);
         for(Pair p : array[index])
         {
             if(p.key.equals(key))
@@ -77,9 +103,9 @@ public class GenericHashMap<K, V>
         return null;
     }
 
-    public V remove(K key)
+    public Object remove(String key)
     {
-        int index = Math.floorMod(key.hashCode(), array.length);
+        int index = Math.floorMod(hash(key), array.length);
         Pair toBeRemoved = null;
         for(Pair p : array[index])
         {
@@ -90,23 +116,24 @@ public class GenericHashMap<K, V>
         }
         if(toBeRemoved != null)
         {
-            V value = toBeRemoved.value;
+            int value = toBeRemoved.value;
             array[index].remove(toBeRemoved);
             numberOfMappings--;
             return value;
+
         }
         return null;
     }
 
-    public boolean remove(K key, V value)
+    public boolean remove(String key, int value)
     {
-        int index = Math.floorMod(key.hashCode(), array.length); 
+        int index = Math.floorMod(hash(key), array.length);
         Pair toBeRemoved = null;
         for(Pair p : array[index])
         {
             if(p.key.equals(key))
             {
-                if(Objects.equals(p.value, value))
+                if(p.value == value)
                 {
                     toBeRemoved = p;
                     break;
@@ -122,32 +149,29 @@ public class GenericHashMap<K, V>
         return false;
     }
 
-    public V replace(K key, V value)
+    public Object replace(String key, int value)
     {
-        int index = Math.floorMod(key.hashCode(), array.length); 
+        int index = Math.floorMod(hash(key), array.length);
         for(Pair p : array[index])
         {
             if(p.key.equals(key))
             {
-                if(!Objects.equals(p.value, value))
-                {
-                    V returned = p.value;
-                    p.value = value;
-                    return returned;
-                }
+                int returned = p.value;
+                p.value = value;
+                return returned;
             }
         } 
         return null;
     }
 
-    public boolean replace(K key, V oldValue, V newValue)
+    public boolean replace(String key, int oldValue, int newValue)
     {
-        int index = Math.floorMod(key.hashCode(), array.length);
+        int index = Math.floorMod(hash(key), array.length);
         for(Pair p : array[index])
         {
             if(p.key.equals(key))
             {
-                if(Objects.equals(p.value, oldValue))
+                if(p.value == oldValue)
                 {
                     p.value = newValue;
                     return true;
@@ -167,10 +191,26 @@ public class GenericHashMap<K, V>
         }
         numberOfCollisions = 0;
         numberOfMappings = 0;
-        rehash(oldArray);
+        for(LinkedList<Pair> l : oldArray)
+        {
+            for(Pair p : l)
+            {
+                put(p.key, p.value);
+            }
+        }
+        
     }
 
-    private void rehash(LinkedList<Pair>[] oldArray) {
+    public void reHash() 
+    {
+        LinkedList<Pair>[] oldArray = array;
+        array = new LinkedList[oldArray.length];
+        for(int i = 0; i < array.length; i++)
+        {
+            array[i] = new LinkedList<>();
+        }
+        numberOfCollisions = 0;
+        numberOfMappings = 0;
         for(LinkedList<Pair> l : oldArray)
         {
             for(Pair p : l)
@@ -180,9 +220,9 @@ public class GenericHashMap<K, V>
         }
     }
 
-    public boolean containsKey(K key)
+    public boolean containsKey(String key)
     {
-        int index = Math.floorMod(key.hashCode(), array.length);
+        int index = Math.floorMod(hash(key), array.length);
         for(Pair p : array[index])
         {
             if(p.key.equals(key))
@@ -193,13 +233,13 @@ public class GenericHashMap<K, V>
         return false;
     }
 
-    public boolean containsValue(V value)
+    public boolean containsValue(int value)
     {
         for(LinkedList<Pair> l : array)
         {
             for(Pair p : l)
             {
-                if(Objects.equals(p.value, value))
+                if(p.value == value)
                 {
                     return true;
                 }
@@ -216,7 +256,7 @@ public class GenericHashMap<K, V>
             array[i] = new LinkedList<>();
         }
         numberOfCollisions = 0;
-        numberOfMappings = 0;
+        numberOfMappings = 0; 
     }
 
     public boolean isEmpty()
@@ -231,10 +271,10 @@ public class GenericHashMap<K, V>
 
     private class Pair
     {
-        public K key;
-        public V value;
+        public String key;
+        public int value;
 
-        public Pair(K key, V value)
+        public Pair(String key, int value)
         {
             this.key = key;
             this.value = value;

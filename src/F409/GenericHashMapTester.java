@@ -13,5 +13,4 @@ public class GenericHashMapTester
         System.out.println(ghm.size());
         System.out.println(ghm.get("hello"));
     }
-    
 }
