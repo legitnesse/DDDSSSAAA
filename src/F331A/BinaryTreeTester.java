@@ -25,6 +25,7 @@ public class BinaryTreeTester
         {
             System.out.println(i);
         }
+        System.out.println(hey.contains(2));
     }
     
 }

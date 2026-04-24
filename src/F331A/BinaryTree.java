@@ -15,6 +15,31 @@ public class BinaryTree<E extends Comparable<E>>
         root = addHelper(root, e);
     }
 
+    public boolean contains(E e)
+    {
+        return containsHelper(root, e);
+    }
+
+    public boolean containsHelper(Node currentNode, E e)
+    {
+        if(currentNode == null)
+        {
+            return false;
+        }
+        else if(currentNode.data.equals(e))
+        {
+            return true;
+        }
+        else if(currentNode.data.compareTo(e) > 0)
+        {
+            return containsHelper(currentNode.leftNode, e);
+        }
+        else 
+        {
+            return containsHelper(currentNode.rightNode, e);
+        }
+    }
+
     public Node addHelper(Node currentNode, E e)
     {
         if(currentNode == null)
@@ -96,8 +121,8 @@ public class BinaryTree<E extends Comparable<E>>
         }
         else
         {
-            preOrderHelper(currentNode.leftNode, list);
-            preOrderHelper(currentNode.rightNode, list);
+            postOrderHelper(currentNode.leftNode, list);
+            postOrderHelper(currentNode.rightNode, list);
             list.add(currentNode.data);
         } 
     }

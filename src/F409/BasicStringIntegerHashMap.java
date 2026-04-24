@@ -104,7 +104,7 @@ public class BasicStringIntegerHashMap
         {
             for(Pair p : data[i])
             {
-                if(p.getKey().equals(value))
+                if(p.getValue() == value)
                 {
                     return true;
                 }
