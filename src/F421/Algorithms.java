@@ -1,8 +1,6 @@
 package F421;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
 import F331A.BinaryTree;
 
 public class Algorithms 
@@ -11,140 +9,151 @@ public class Algorithms
     {
         for(int i = 0; i < arr.length; i++)
         {
-            if(arr[i] == target)
+            if(target == arr[i])
             {
                 return i;
             }
         }
         return -1;
     }
-    public static <T> int linearSearch(ArrayList<T> arrList, T target)
+    public static int linearSearch(ArrayList<Integer> arr, int target)
     {
-        Iterator<T> iterator = arrList.iterator();
-        int index = 0;
-        while(iterator.hasNext())
+        int i = 0;
+        for(int x : arr)
         {
-            
-            if(Objects.equals(iterator.next(), target))
-            {
-                return index;
-            }
-            index++;
-        }
-        return -1;
-    }
-    public static <T> int linearSearch(T[] arr, T target)
-    {
-        for(int i = 0; i < arr.length; i++)
-        {
-            if(Objects.equals(arr[i], target))
+            if(target == x)
             {
                 return i;
             }
+            i++;
         }
         return -1;
     }
-    public static int linearBinarySearch(int[] arr, int target)
+    public static int iterativeBinarySearch(int[] arr, int target)
     {
         int lowerIndex = 0;
         int upperIndex = arr.length - 1;
         while(lowerIndex <= upperIndex)
         {
-            if(arr[lowerIndex] == target)
+            if(target == arr[lowerIndex])
             {
                 return lowerIndex;
             }
-            else if(arr[upperIndex] == target)
+            if(target == arr[upperIndex])
             {
                 return upperIndex;
             }
+            int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
+            if(target == arr[middleIndex])
+            {
+                return middleIndex;
+            }
+            else if(target < arr[middleIndex])
+            {
+                upperIndex = middleIndex - 1;
+            }
             else
             {
-                int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
-                if(arr[middleIndex] == target)
-                {
-                    return middleIndex;
-                }
-                else if(arr[middleIndex] > target)
-                {
-                    upperIndex = middleIndex - 1;
-                }
-                else
-                {
-                    lowerIndex = middleIndex + 1;
-                }
+                lowerIndex = middleIndex + 1;
             }
         }
         return -1;
     }
-    public static <T extends Comparable<? super T>> int linearBinarySearch(ArrayList<T> arrList, T target)
+    public static int iterativeBinarySearch(ArrayList<Integer> arr, int target)
     {
         int lowerIndex = 0;
-        int upperIndex = arrList.size() - 1;
+        int upperIndex = arr.size() - 1;
         while(lowerIndex <= upperIndex)
         {
-            if(Objects.equals(arrList.get(lowerIndex), target))
+            if(target == arr.get(lowerIndex))
             {
                 return lowerIndex;
             }
-            else if(Objects.equals(arrList.get(upperIndex), target))
+            if(target == arr.get(upperIndex))
             {
                 return upperIndex;
             }
+            int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
+            if(target == arr.get(middleIndex))
+            {
+                return middleIndex;
+            }
+            else if(target < arr.get(middleIndex))
+            {
+                upperIndex = middleIndex - 1;
+            }
             else
             {
-                int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
-                if(Objects.equals(arrList.get(middleIndex), target))
-                {
-                    return middleIndex;
-                }
-                else if(arrList.get(middleIndex).compareTo(target) > 0)
-                {
-                    upperIndex = middleIndex - 1;
-                }
-                else
-                {
-                    lowerIndex = middleIndex + 1;
-                }
+                lowerIndex = middleIndex + 1;
             }
         }
         return -1;
     }
-    public static <T extends Comparable<? super T>> int linearBinarySearch(T[] arr, T target)
+    public static int recursiveBinarySearch(int[] arr, int target)
     {
-        int lowerIndex = 0;
-        int upperIndex = arr.length - 1;
-        while(lowerIndex <= upperIndex)
-        {
-            if(Objects.equals(arr[lowerIndex], target))
-            {
-                return lowerIndex;
-            }
-            else if(Objects.equals(arr[upperIndex], target))
-            {
-                return upperIndex;
-            }
-            else
-            {
-                int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
-                if(Objects.equals(arr[middleIndex], target))
-                {
-                    return middleIndex;
-                }
-                else if(arr[middleIndex].compareTo(target) > 0)
-                {
-                    upperIndex = middleIndex - 1;
-                }
-                else
-                {
-                    lowerIndex = middleIndex + 1;
-                }
-            }
-        }
-        return -1;
+        return recursiveBinarySearch(arr, target, 0, arr.length - 1);
     }
-
-    public static boolean binarySearchTree(int[] arr, int target)
+    public static int recursiveBinarySearch(int[] arr, int target, int lowerIndex, int upperIndex)
+    {
+        if(upperIndex < lowerIndex)
+        {
+            return -1;
+        }
+        if(target == arr[lowerIndex])
+        {
+            return lowerIndex;
+        }
+        if(target == arr[upperIndex])
+        {
+            return upperIndex;
+        }
+        int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
+        if(target == arr[middleIndex])
+        {
+            return middleIndex;
+        }
+        else if(target < arr[middleIndex])
+        {
+            return recursiveBinarySearch(arr, target, lowerIndex, middleIndex - 1);
+        }
+        else
+        {
+            return recursiveBinarySearch(arr, target, middleIndex + 1, upperIndex);
+        }
+    }
+    public static int recursiveBinarySearch(ArrayList<Integer> arr, int target)
+    {
+        return recursiveBinarySearch(arr, target, 0, arr.size() - 1);
+    }
+    public static int recursiveBinarySearch(ArrayList<Integer> arr, int target, int lowerIndex, int upperIndex)
+    {
+        if(upperIndex < lowerIndex)
+        {
+            return -1;
+        }
+        if(target == arr.get(lowerIndex))
+        {
+            return lowerIndex;
+        }
+        if(target == arr.get(upperIndex))
+        {
+            return upperIndex;
+        }
+        int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
+        if(target == arr.get(middleIndex))
+        {
+            return middleIndex;
+        }
+        else if(target < arr.get(middleIndex))
+        {
+            return recursiveBinarySearch(arr, target, lowerIndex, middleIndex - 1);
+        }
+        else
+        {
+            return recursiveBinarySearch(arr, target, middleIndex + 1, upperIndex);
+        }
+    }
+    public static boolean binaryTreeSearch(int[] arr, int target)
     {
         BinaryTree<Integer> bt = new BinaryTree<>();
         for(int i : arr)
@@ -153,92 +162,47 @@ public class Algorithms
         }
         return bt.contains(target);
     }
-    public static int recursiveBinarySearch(int[] arr, int target)
+    public static boolean binaryTreeSearch(ArrayList<Integer> arr, int target)
     {
-        return recursiveBinarySearchHelper(arr, target, 0, arr.length - 1);
-    }
-    private static int recursiveBinarySearchHelper(int[] arr, int target, int lowerIndex, int upperIndex)
-    {
-        if(lowerIndex > upperIndex)
+        BinaryTree<Integer> bt = new BinaryTree<>();
+        for(int i : arr)
         {
-            return -1;
+            bt.add(i);
         }
-        else if(arr[lowerIndex] == target)
-        {
-            return lowerIndex;
-        }
-        else if(arr[upperIndex] == target)
-        {
-            return upperIndex;
-        }
-        else
-        {
-            int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
-            if(arr[middleIndex] == target)
-            {
-                return middleIndex;
-            }
-            else if(arr[middleIndex] > target)
-            {
-                return recursiveBinarySearchHelper(arr, target, lowerIndex, middleIndex - 1);
-            }
-            else
-            {
-                return recursiveBinarySearchHelper(arr, target, middleIndex + 1, upperIndex);
-            }
-        }
+        return bt.contains(target);
     }
     public static void bubbleSort(int[] arr)
     {
-        boolean hadSwap = true;
-        while(hadSwap)
+        boolean neededSwap = true;
+        while(neededSwap)
         {
-            hadSwap = false;
+            neededSwap = false;
             for(int i = 0; i < arr.length - 1; i++)
             {
-                if(arr[i + 1] < arr[i])
+                if(arr[i] > arr[i + 1])
                 {
                     int temp = arr[i];
                     arr[i] = arr[i + 1];
                     arr[i + 1] = temp;
-                    hadSwap = true;
+                    neededSwap = true;
                 }
             }
         }
     }
-
-    public static <T extends Comparable<? super T>> void bubbleSort(ArrayList<T> arrList)
+    public static void bubbleSort(ArrayList<Integer> arr)
     {
-        boolean hadSwap = true;
-        while(hadSwap)
+        boolean neededSwap = true;
+        while(neededSwap)
         {
-            hadSwap = false;
-            for(int i = 0; i < arrList.size() - 1; i++)
+            neededSwap = false;
+            for(int i = 0; i < arr.size() - 1; i++)
             {
-                if(arrList.get(i + 1).compareTo(arrList.get(i)) < 0)
+                if(arr.get(i) > arr.get(i + 1))
                 {
-                    T temp = arrList.get(i);
-                    arrList.set(i, arrList.get(i + 1));
-                    arrList.set(i + 1, temp);
-                    hadSwap = true;
-                }
-            }
-        }
-    }
-    public static <T extends Comparable<? super T>> void bubbleSort(T[] arr)
-    { 
-        boolean hadSwap = true;
-        while(hadSwap)
-        {
-            hadSwap = false;
-            for(int i = 0; i < arr.length - 1; i++)
-            {
-                if(arr[i + 1].compareTo(arr[i]) < 0)
-                {
-                    T temp = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = temp;
-                    hadSwap = true;
+                    int temp = arr.get(i);
+                    arr.set(i, arr.get(i + 1));
+                    arr.set(i + 1, temp);
+                    neededSwap = true;
                 }
             }
         }
@@ -247,8 +211,8 @@ public class Algorithms
     {
         for(int i = 1; i < arr.length; i++)
         {
-            int j = i - 1;
             int currentValue = arr[i];
+            int j = i - 1;
             while(j >= 0 && arr[j] > currentValue)
             {
                 arr[j + 1] = arr[j];
@@ -257,115 +221,248 @@ public class Algorithms
             arr[j + 1] = currentValue;
         }
     }
-    
-    public static <T extends Comparable<? super T>> void insertionSort(ArrayList<T> arrList)
+    public static void insertionSort(ArrayList<Integer> arr)
     {
-        for(int i = 1; i < arrList.size(); i++)
+        for(int i = 1; i < arr.size(); i++)
         {
+            int currentValue = arr.get(i);
             int j = i - 1;
-            T currentValue = arrList.get(i);
-            while(j >= 0 && arrList.get(j).compareTo(currentValue) > 0)
+            while(j >= 0 && arr.get(j) > currentValue)
             {
-                arrList.set(j + 1, arrList.get(j));
+                arr.set(j + 1, arr.get(j));
                 j--;
             }
-            arrList.set(j + 1, currentValue);
-        }
-        
-    }
-    public static <T extends Comparable<? super T>> void insertionSort(T[] arr)
-    {
-        for(int i = 1; i < arr.length; i++)
-        {
-            int j = i - 1;
-            T currentValue = arr[i];
-            while(j >= 0 && arr[j].compareTo(currentValue) > 0)
-            {
-                arr[j + 1] = arr[j];
-                j--;
-            }
-            arr[j + 1] = currentValue;
+            arr.set(j + 1, currentValue);
         }
     }
     public static void selectionSort(int[] arr)
     {
         for(int i = 0; i < arr.length; i++)
         {
-            int indexOfSmallestValue = i;
+            int minimumValueIndex = i;
             for(int j = i + 1; j < arr.length; j++)
             {
-                if(arr[j] < arr[indexOfSmallestValue])
+                if(arr[j] < arr[minimumValueIndex])
                 {
-                    indexOfSmallestValue = j;
+                    minimumValueIndex = j;
                 }
             }
-            if(indexOfSmallestValue != i)
-            {
-                int temp = arr[i];
-                arr[i] = arr[indexOfSmallestValue];
-                arr[indexOfSmallestValue] = temp;
-            }
+            int temp = arr[i];
+            arr[i] = arr[minimumValueIndex];
+            arr[minimumValueIndex] = temp;
         }
     }
-    public static <T extends Comparable<? super T>> void selectionSort(ArrayList<T> arrList)
+    public static void selectionSort(ArrayList<Integer> arr)
     {
-        for(int i = 0; i < arrList.size(); i++)
+        for(int i = 0; i < arr.size(); i++)
         {
-            int indexOfSmallestValue = i;
-            for(int j = i + 1; j < arrList.size(); j++)
+            int minimumValueIndex = i;
+            for(int j = i + 1; j < arr.size(); j++)
             {
-                if(arrList.get(j).compareTo(arrList.get(indexOfSmallestValue)) < 0)
+                if(arr.get(j) < arr.get(minimumValueIndex))
                 {
-                    indexOfSmallestValue = j;
+                    minimumValueIndex = j;
                 }
             }
-            if(indexOfSmallestValue != i)
-            {
-                T temp = arrList.get(i);
-                arrList.set(i, arrList.get(indexOfSmallestValue));
-                arrList.set(indexOfSmallestValue, temp);
-            }
-        }
-    }
-    public static <T extends Comparable<? super T>> void selectionSort(T[] arr)
-    {
-        for(int i = 0; i < arr.length; i++)
-        {
-            int indexOfSmallestValue = i;
-            for(int j = i + 1; j < arr.length; j++)
-            {
-                if(arr[j].compareTo(arr[indexOfSmallestValue]) < 0)
-                {
-                    indexOfSmallestValue = j;
-                }
-            }
-            if(indexOfSmallestValue != i)
-            {
-                T temp = arr[i];
-                arr[i] = arr[indexOfSmallestValue];
-                arr[indexOfSmallestValue] = temp;
-            }
+            int temp = arr.get(i);
+            arr.set(i, arr.get(minimumValueIndex));
+            arr.set(minimumValueIndex, temp);
         }
     }
     public static void shellSort(int[] arr)
     {
         for(int stepSize = arr.length / 2; stepSize > 0; stepSize /= 2)
         {
-            for(int i = 0; i < arr.length - stepSize; i++)
+            for(int i = stepSize; i < arr.length; i++)
             {
-                if(arr[i] > arr[i + stepSize])
+                int currentValue = arr[i];
+                int j = i - stepSize;
+                while(j >= 0 && arr[j] > currentValue)
                 {
-                    int temp = arr[i + stepSize];
-                    int j;
-                    for(j = i + stepSize; j > i; j--)
-                    {
-                        arr[j] = arr[j - 1];
-                    }
-                    arr[j] = temp;
+                    arr[j + stepSize] = arr[j];
+                    j -= stepSize;
                 }
+                arr[j + stepSize] = currentValue;
             }
         }
-        
     }
-    
+    public static void shellSort(ArrayList<Integer> arr)
+    {
+        for(int stepSize = arr.size() / 2; stepSize > 0; stepSize /= 2)
+        {
+            for(int i = stepSize; i < arr.size(); i++)
+            {
+                int currentValue = arr.get(i);
+                int j = i - stepSize;
+                while(j >= 0 && arr.get(j) > currentValue)
+                {
+                    arr.set(j + stepSize, arr.get(j));
+                    j -= stepSize;
+                }
+                arr.set(j + stepSize, currentValue);
+            }
+        }
+    }
+    public static void mergeSort(int[] arr)
+    {
+        if(arr.length <= 1)
+        {
+            return;
+        }
+        int[] aux = new int[arr.length];
+        mergeSort(arr, aux, 0, arr.length - 1);
+    }
+    private static void mergeSort(int[] arr, int[] aux, int lowerIndex, int upperIndex)
+    {
+        if(lowerIndex >= upperIndex)
+        {
+            return;
+        }
+        int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
+        mergeSort(arr, aux, lowerIndex, middleIndex);
+        mergeSort(arr, aux, middleIndex + 1, upperIndex);
+        merge(arr, aux, lowerIndex, middleIndex, upperIndex);
+    }
+    private static void merge(int[] arr, int[] aux, int lowerIndex, int middleIndex, int upperIndex)
+    {
+        for(int k = lowerIndex; k <= upperIndex; k++)
+        {
+            aux[k] = arr[k];
+        }
+        int i = lowerIndex;
+        int j = middleIndex + 1;
+        int k = lowerIndex;
+        while(i <= middleIndex && j <= upperIndex)
+        {
+            if(aux[i] <= aux[j])
+            {
+                arr[k++] = aux[i++];
+            }
+            else
+            {
+                arr[k++] = aux[j++];
+            }
+        }
+        while(i <= middleIndex)
+        {
+            arr[k++] = aux[i++];
+        }
+        while(j <= upperIndex)
+        {
+            arr[k++] = aux[j++];
+        }
+    }
+    public static void mergeSort(ArrayList<Integer> arr)
+    {
+        if(arr.size() <= 1)
+        {
+            return;
+        }
+        ArrayList<Integer> aux = new ArrayList<>(arr);
+        mergeSort(arr, aux, 0, arr.size() - 1);
+    }
+    private static void mergeSort(ArrayList<Integer> arr, ArrayList<Integer> aux, int lowerIndex, int upperIndex)
+    {
+        if(lowerIndex >= upperIndex)
+        {
+            return;
+        }
+        int middleIndex = lowerIndex + (upperIndex - lowerIndex) / 2;
+        mergeSort(arr, aux, lowerIndex, middleIndex);
+        mergeSort(arr, aux, middleIndex + 1, upperIndex);
+        merge(arr, aux, lowerIndex, middleIndex, upperIndex);
+    }
+    private static void merge(ArrayList<Integer> arr, ArrayList<Integer> aux, int lowerIndex, int middleIndex, int upperIndex)
+    {
+        for(int k = lowerIndex; k <= upperIndex; k++)
+        {
+            aux.set(k, arr.get(k));
+        }
+        int i = lowerIndex;
+        int j = middleIndex + 1;
+        int k = lowerIndex;
+        while(i <= middleIndex && j <= upperIndex)
+        {
+            if(aux.get(i) <= aux.get(j))
+            {
+                arr.set(k++, aux.get(i++));
+            }
+            else
+            {
+                arr.set(k++, aux.get(j++));
+            }
+        }
+        while(i <= middleIndex)
+        {
+            arr.set(k++, aux.get(i++));
+        }
+        while(j <= upperIndex)
+        {
+            arr.set(k++, aux.get(j++));
+        }
+    }
+    public static void quickSort(int[] arr)
+    {
+        quickSort(arr, 0, arr.length - 1);
+    }
+    public static void quickSort(int[] arr, int lowerIndex, int upperIndex)
+    {
+        if(lowerIndex < upperIndex)
+        {
+            int p = partition(arr, lowerIndex, upperIndex);
+            quickSort(arr, lowerIndex, p - 1);
+            quickSort(arr, p + 1, upperIndex);
+        }
+    }
+    public static int partition(int[] arr, int lowerIndex, int upperIndex)
+    {
+        int pivotValue = arr[upperIndex];
+        int i = lowerIndex - 1;
+        for(int j = i + 1; j < upperIndex + 1; j++)
+        {
+            if(arr[j] < pivotValue)
+            {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        int temp = arr[i + 1];
+        arr[i + 1] = pivotValue;
+        arr[upperIndex] = temp;
+        return i + 1;
+    }
+    public static void quickSort(ArrayList<Integer> arr)
+    {
+        quickSort(arr, 0, arr.size() - 1);
+    }
+    public static void quickSort(ArrayList<Integer> arr, int lowerIndex, int upperIndex)
+    {
+        if(lowerIndex < upperIndex)
+        {
+            int p = partition(arr, lowerIndex, upperIndex);
+            quickSort(arr, lowerIndex, p - 1);
+            quickSort(arr, p + 1, upperIndex);
+        }
+    }
+    public static int partition(ArrayList<Integer> arr, int lowerIndex, int upperIndex)
+    {
+        int pivotValue = arr.get(upperIndex);
+        int i = lowerIndex - 1;
+        for(int j = i + 1; j < upperIndex + 1; j++)
+        {
+            if(arr.get(j) < pivotValue)
+            {
+                i++;
+                int temp = arr.get(i);
+                arr.set(i, arr.get(j));
+                arr.set(j, temp);
+            }
+        }
+        int temp = arr.get(i + 1);
+        arr.set(i + 1, pivotValue);
+        arr.set(upperIndex, temp);
+        return i + 1;
+    }
 }
